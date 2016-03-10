@@ -1,3 +1,3 @@
 #!/bin/bash
-nodejs cli.js --ai mcbotv1 -n crayons -H peli.hausk.at -P 8883
+nodejs cli.js --ai mcbot -n crayons -H peli.hausk.at -P 8883
 
