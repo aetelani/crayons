@@ -52,6 +52,23 @@ module.exports = function Ai() {
     return result;
   }
 
+  function neighbours(pos, radius, fieldRadius) {
+    var result = [];
+
+    for (var x = pos.x - radius; x <= pos.x + radius; x++) {
+        for (var y = pos.y - radius; y <= pos.y + radius; y++) {
+            var newPos = position.make(x,y);
+            if ( position.distance(pos, newPos) <= radius && 
+                 position.distance({x:0, y:0}, newPos) <= fieldRadius &&
+                 !position.eq(pos, newPos)) {
+                result.push(newPos);
+            }
+        }
+    }
+
+    return result;
+  }
+
   function calcRadar(mapSize, radarRad)
   {
         var safety = 4;
@@ -141,7 +158,8 @@ module.exports = function Ai() {
 	/* -- Init bot work queues -- */
 	workQueue = [];
     radarPoints = [];
-    allPositions = position.neighbours(position.origo, config.fieldRadius-3);
+    allPositions = neighbours(position.origo, config.fieldRadius-3, config.fieldRadius);
+    
 	addJobToQueue(0, { action: "init" }, null, bots, config);
 
     /* -- Remove expired sightings -- */
@@ -162,7 +180,7 @@ module.exports = function Ai() {
 			break;
 		case "hit":
 			var bot = getBot(event.source, bots);
-			var ps = position.neighbours(position.make(prevTargets[bot.botId].x, prevTargets[bot.botId].y), 1);
+			var ps = neighbours(position.make(prevTargets[bot.botId].x, prevTargets[bot.botId].y), 1, config.fieldRadius);
 			var pos = ps[randInt(0, ps.length - 1)];
 
 			addJobToQueue(3, { action: "attack", pos: pos } , null, bots, config);
