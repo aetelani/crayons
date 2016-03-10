@@ -116,7 +116,7 @@ module.exports = function Ai() {
 			break;
 
 		case "flee":
-			var ps = maxNeighbours(position.make(bot.x, bot.y), config.move, config.origo, config.fieldRadius);
+			var ps = maxNeighbours(position.make(bot.x, bot.y), config.move, position.origo, config.fieldRadius);
 			var pos = ps[randInt(0, ps.length - 1)];
 			workQueue[ botId ].push({ priority: priority, action: "move" , x: pos.x, y: pos.y });
 
