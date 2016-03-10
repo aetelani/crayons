@@ -162,6 +162,24 @@ module.exports = function Ai() {
     
 	addJobToQueue(0, { action: "init" }, null, bots, config);
 
+    /* -- Spread out bots on first round -- */
+    if(roundId==0)
+    {
+        for(var l1=0; l1<bots.length; l1++)
+        for(var l2=l1+1; l2<bots.length; l2++)
+        {
+            var botA = bots[l1], 
+                botB = bots[l2],
+                distance = position.distance( { x: botA.x, y: botA.y} , { x: botB.x, y: botB.y} );
+            
+            if(distance < 3)
+            {
+                addJobToQueue(2, { action: "flee" }, botA.botID, bots, config);
+                console.error( "Bot "+botA.botId+" <-> bot "+botB.botId+" == "  + distance );
+            }
+        }
+    }
+
     /* -- Remove expired sightings -- */
     _.forEach(enemySightings, function(item,key) {
 	if( (roundId - item.round) > 2 )
