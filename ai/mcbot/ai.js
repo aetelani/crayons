@@ -30,21 +30,27 @@ module.exports = function Ai() {
 	return null;
   }
 
-  function maxNeighbours(pos, radius) {
+  function maxNeighbours(pos, radius, origo, fieldRadius) {
     var result = [];
 
     for (var x = pos.x - radius; x <= pos.x + radius; x++) {
         for (var y = pos.y - radius; y <= pos.y + radius; y++) {
+
             var newPos = position.make(x, y);
-            if (position.distance(pos, newPos) === radius && !position.eq(pos, newPos)) {
-                result.push(newPos);
-            }
+            
+            if( position.distance(pos,newPos) !== radius ||
+                position.distance(newPos, origo) > fieldRadius ||
+                position.eq(pos, newPos)
+            )
+                continue;
+                
+            result.push(newPos);
+
         }
     }
 
     return result;
   }
-
 
   function calcRadar(mapSize, radarRad)
   {
@@ -110,7 +116,7 @@ module.exports = function Ai() {
 			break;
 
 		case "flee":
-			var ps = maxNeighbours(position.make(bot.x, bot.y), config.move);
+			var ps = maxNeighbours(position.make(bot.x, bot.y), config.move, config.origo, config.fieldRadius);
 			var pos = ps[randInt(0, ps.length - 1)];
 			workQueue[ botId ].push({ priority: priority, action: "move" , x: pos.x, y: pos.y });
 
