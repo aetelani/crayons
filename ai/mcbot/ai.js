@@ -1,3 +1,4 @@
+// Distributed under CC-BY license (c) 2016 Pekka Harjamäki
 /* ex: set tabstop=4: */
 "use strict";
 
