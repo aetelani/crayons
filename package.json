@@ -4,7 +4,8 @@
   "description": "Destroy 'em all!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nsp": "nsp check"
   },
   "bin": {
     "space-tyckiting": "cli.js"
@@ -16,11 +17,12 @@
     "commander": "^2.6.0",
     "lodash": "^3.3.1",
     "request": "^2.53.0",
-    "ws": "^0.7.1"
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "chai": "^2.1.2",
     "eslint": "^0.15.0",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.1",
+    "nsp": "^2.6.2"
   }
 }
